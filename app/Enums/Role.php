@@ -9,13 +9,8 @@ enum Role: int
     case CUSTOMER = 3;
     case GUIDE = 4;
 
-    public static function toString(int $type): string
+    public function toString(): string
     {
-        return match ($type) {
-            self::ADMINISTRATOR->value => 'administrator',
-            self::COMPANY_OWNER->value => 'company owner',
-            self::CUSTOMER->value => 'customer',
-            self::GUIDE->value => 'guide',
-        };
+        return strtolower(str_replace('_', ' ', $this->name));
     }
 }
