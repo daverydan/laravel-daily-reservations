@@ -18,7 +18,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Added
-    Route::resource('companies', CompanyController::class);
+    Route::resource('companies', CompanyController::class)->middleware('isAdmin');
 });
 
 require __DIR__.'/auth.php';
