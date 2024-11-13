@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -20,13 +21,19 @@ class UserSeeder extends Seeder
                 'name' => 'Administrator',
                 'email' => 'd@me.com',
                 'password' => $password,
-                'role_id' => 1,
+                'role_id' => Role::ADMINISTRATOR->value,
             ],
             [
-                'name' => 'Jon Deer',
-                'email' => 'jon@deer.com',
+                'name' => 'Jane Doe',
+                'email' => 'jn@me.com',
                 'password' => $password,
-                'role_id' => 3,
+                'role_id' => Role::COMPANY_OWNER->value,
+            ],
+            [
+                'name' => 'John Deer',
+                'email' => 'jd@me.com',
+                'password' => $password,
+                'role_id' => Role::CUSTOMER->value,
             ],
         ])->each(fn ($user) => User::create($user));
     }
