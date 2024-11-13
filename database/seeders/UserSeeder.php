@@ -27,6 +27,7 @@ class UserSeeder extends Seeder
                 'name' => 'Jane Doe',
                 'email' => 'jn@me.com',
                 'password' => $password,
+                'company_id' => 1,
                 'role_id' => Role::COMPANY_OWNER->value,
             ],
             [
