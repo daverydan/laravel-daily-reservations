@@ -24,6 +24,9 @@
                         <x-nav-link :href="route('companies.users.index', auth()->user()->company_id)" :active="request()->routeIs('companies.users.*')">
                             {{ __('Administrators') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('companies.guides.index', auth()->user()->company_id)" :active="request()->routeIs('companies.guides.*')">
+                            {{ __('Guides') }}
+                        </x-nav-link>
                     @endif
                 </div>
             </div>
@@ -94,8 +97,11 @@
                 </x-responsive-nav-link>
             @endif
             @if (auth()->user()->role_id === \App\Enums\Role::COMPANY_OWNER->value)
-                <x-responsive-nav-link :href="route('companies.users.index', auth()->user())"  :active="request()->routeIs('companies.users.*')">
+                <x-responsive-nav-link :href="route('companies.users.index', auth()->user()->company_id)"  :active="request()->routeIs('companies.users.*')">
                     {{ __('Administrators') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('companies.guides.index', auth()->user()->company_id)"  :active="request()->routeIs('companies.guides.*')">
+                    {{ __('Guides') }}
                 </x-responsive-nav-link>
             @endif
         </div>
