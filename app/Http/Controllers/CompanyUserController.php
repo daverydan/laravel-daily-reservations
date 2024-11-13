@@ -45,4 +45,11 @@ class CompanyUserController extends Controller
 
         return to_route('companies.users.index', $company);
     }
+
+    public function destroy(Company $company, User $user)
+    {
+        $user->delete();
+
+        return to_route('companies.users.index', $company);
+    }
 }
