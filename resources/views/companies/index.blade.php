@@ -32,13 +32,18 @@
                                 @foreach ($companies as $company)
                                     <tr class="bg-white">
                                         <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
-                                            {{ $company->name }}
-                                        </td>
-                                        <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                                            <p class="mb-1">{{ $company->name }}</p>
                                             <a href="{{ route('companies.users.index', $company) }}"
                                                 class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-widest text-gray-700 shadow-sm transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25">
                                                 Users
                                             </a>
+                                            <a href="{{ route('companies.activities.index', $company) }}"
+                                                class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-widest text-gray-700 shadow-sm transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 ml-1">
+                                                Activities
+                                            </a>
+                                        </td>
+                                        <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                                            <p class="opacity-0 mb-1">Actions</p>
                                             <a href="{{ route('companies.edit', $company) }}"
                                                 class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-widest text-gray-700 shadow-sm transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25">
                                                 Edit
