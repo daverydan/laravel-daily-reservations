@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompanyActivityController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CompanyGuideController;
 use App\Http\Controllers\CompanyUserController;
@@ -26,6 +27,7 @@ Route::middleware('auth')->group(function () {
         ->except('show');
     Route::resource('companies.guides', CompanyGuideController::class)
         ->except('show');
+    Route::resource('companies.activities', CompanyActivityController::class);
 });
 
 require __DIR__.'/auth.php';
