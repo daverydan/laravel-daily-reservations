@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\Enums\Role;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Mail\RegistrationInvite;
 use App\Models\Company;
 use App\Models\User;
+use App\Models\UserInvitation;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class CompanyUserController extends Controller
 {
@@ -32,11 +36,14 @@ class CompanyUserController extends Controller
     {
         Gate::authorize('create', $company);
 
-        $company->users()->create([
+        $invitation = UserInvitation::create([
             ...$request->validated(),
-            'password' => bcrypt($request->password),
+            'token' => Str::uuid(),
+            'company_id' => $company->id,
             'role_id' => Role::COMPANY_OWNER->value,
         ]);
+
+        Mail::to($request->input('email'))->send(new RegistrationInvite($invitation));
 
         return to_route('companies.users.index', $company);
     }
