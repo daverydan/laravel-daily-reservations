@@ -2,7 +2,7 @@
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
-            <div class="flex">
+            <div class="flex w-full">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('home') }}">
@@ -11,28 +11,45 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
-                        {{ __('Home') }}
-                    </x-nav-link>
-                    @auth
-                        @if (auth()->user()->role_id === \App\Enums\Role::ADMINISTRATOR->value)
-                            <x-nav-link :href="route('companies.index')" :active="request()->routeIs('companies.index')">
-                                {{ __('Companies') }}
-                            </x-nav-link>
-                        @endif
-                        @if (auth()->user()->role_id === \App\Enums\Role::COMPANY_OWNER->value)
-                            <x-nav-link :href="route('companies.users.index', auth()->user()->company_id)" :active="request()->routeIs('companies.users.*')">
-                                {{ __('Administrators') }}
-                            </x-nav-link>
-                            <x-nav-link :href="route('companies.guides.index', auth()->user()->company_id)" :active="request()->routeIs('companies.guides.*')">
-                                {{ __('Guides') }}
-                            </x-nav-link>
-                            <x-nav-link :href="route('companies.activities.index', auth()->user()->company_id)" :active="request()->routeIs('companies.activities.*')">
-                                {{ __('Activities') }}
-                            </x-nav-link>
-                        @endif
-                    @endauth
+                <div class="flex justify-between w-full">
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                            {{ __('Home') }}
+                        </x-nav-link>
+                        @auth
+                            @if (auth()->user()->role_id === \App\Enums\Role::ADMINISTRATOR->value)
+                                <x-nav-link :href="route('companies.index')" :active="request()->routeIs('companies.index')">
+                                    {{ __('Companies') }}
+                                </x-nav-link>
+                            @endif
+                            @if (auth()->user()->role_id === \App\Enums\Role::COMPANY_OWNER->value)
+                                <x-nav-link :href="route('companies.users.index', auth()->user()->company_id)" :active="request()->routeIs('companies.users.*')">
+                                    {{ __('Administrators') }}
+                                </x-nav-link>
+                                <x-nav-link :href="route('companies.guides.index', auth()->user()->company_id)" :active="request()->routeIs('companies.guides.*')">
+                                    {{ __('Guides') }}
+                                </x-nav-link>
+                                <x-nav-link :href="route('companies.activities.index', auth()->user()->company_id)" :active="request()->routeIs('companies.activities.*')">
+                                    {{ __('Activities') }}
+                                </x-nav-link>
+                            @endif
+                        @endauth
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        @guest
+                            @if (Route::has('login'))
+                                <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
+                                    {{ __('Login') }}
+                                </x-nav-link>
+
+                                @if (Route::has('register'))
+                                    <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
+                                        {{ __('Register') }}
+                                    </x-nav-link>
+                                @endif
+                            @endif
+                        @endguest
+                    </div>
                 </div>
             </div>
 
