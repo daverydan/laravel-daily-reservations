@@ -40,6 +40,7 @@ class UserSeeder extends Seeder
                 'name' => 'Guide',
                 'email' => 'guide@me.com',
                 'password' => $password,
+                'company_id' => 1,
                 'role_id' => Role::GUIDE->value,
             ],
         ])->each(fn ($user) => User::create($user));
