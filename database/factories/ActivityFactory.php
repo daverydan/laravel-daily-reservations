@@ -20,10 +20,11 @@ class ActivityFactory extends Factory
      */
     public function definition(): array
     {
-        $guide = User::firstWhere('role_id', Role::GUIDE);
+        $company_id = Company::all()->random()->id;
+        $guide = User::where('company_id', $company_id)->where('role_id', Role::GUIDE)->first();
 
         return [
-            'company_id' => Company::all()->random()->id,
+            'company_id' => $company_id,
             'guide_id' => $guide->id,
             'name' => $guide->name,
             'description' => fake()->text(),
