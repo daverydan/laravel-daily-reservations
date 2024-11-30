@@ -27,12 +27,17 @@ class CompanyActivityTest extends TestCase
     {
         $company = Company::factory()->create();
         $user = User::factory()->companyOwner()->create(['company_id' => $company->id]);
-        $activity = Activity::factory()->create(['company_id' => $company->id]);
+        $guide1 = User::factory()->guide()->create();
+        $activity = Activity::factory()->create([
+            'company_id' => $company->id,
+            'guide_id' => $guide1->id,
+            'name' => $guide1->name,
+        ]);
 
-        $guide = User::factory()->guide()->create();
+        $guide2 = User::factory()->guide()->create();
         $activity2 = Activity::factory()->create([
-            'guide_id' => $guide->id,
-            'name' => $guide->name,
+            'guide_id' => $guide2->id,
+            'name' => $guide2->name,
         ]);
 
         $response = $this->actingAs($user)->get(route('companies.activities.index', $company));
@@ -206,7 +211,12 @@ class CompanyActivityTest extends TestCase
     {
         $company = Company::factory()->create();
         $user = User::factory()->companyOwner()->create(['company_id' => $company->id]);
-        $activity = Activity::factory()->create(['company_id' => $company->id]);
+        $guide = User::factory()->guide()->create();
+        $activity = Activity::factory()->create([
+            'company_id' => $company->id,
+            'guide_id' => $guide->id,
+            'name' => $guide->name,
+        ]);
 
         $response = $this->actingAs($user)->delete(route('companies.activities.destroy', [$company, $activity]));
 
@@ -220,7 +230,12 @@ class CompanyActivityTest extends TestCase
         $company = Company::factory()->create();
         $company2 = Company::factory()->create();
         $user = User::factory()->companyOwner()->create(['company_id' => $company->id]);
-        $activity = Activity::factory()->create(['company_id' => $company2->id]);
+        $guide = User::factory()->guide()->create();
+        $activity = Activity::factory()->create([
+            'company_id' => $company2->id,
+            'guide_id' => $guide->id,
+            'name' => $guide->name,
+        ]);
 
         $response = $this->actingAs($user)->delete(route('companies.activities.destroy', [$company2, $activity]));
 
