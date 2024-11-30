@@ -41,6 +41,7 @@ class CompanyActivityController extends Controller
         $filename = $this->uploadImage($request);
 
         Activity::create($request->validated() + [
+            ...$request->validated(),
             'company_id' => $company->id,
             'photo' => $filename,
         ]);

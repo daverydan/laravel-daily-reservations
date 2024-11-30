@@ -46,8 +46,9 @@
                                     <tr class="bg-white">
                                         <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
                                             @if ($activity->photo)
-                                                <img src="{{ asset($activity->photo) }}" alt="{{ $activity->name }}"
-                                                    class="w-16 h-16 rounded-xl">
+                                                <img src="{{ asset($activity->thumbnail) }}" alt="{{ $activity->name }}" class="w-16 h-16 rounded-xl">
+                                            @else
+                                                <img src="{{ asset('images/no_image.jpg') }}" alt="image not available" class="w-16 h-16 rounded-xl">
                                             @endif
                                         </td>
                                         <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">

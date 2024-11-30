@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -11,6 +12,11 @@ class HomeController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return view('home');
+        $activities = Activity::where('start_time', '>', now())
+            ->orderBy('start_time')
+            ->paginate(9);
+
+        // dd(Activity::all());
+        return view('home', compact('activities'));
     }
 }
