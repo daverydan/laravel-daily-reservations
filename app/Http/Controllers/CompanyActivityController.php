@@ -10,6 +10,7 @@ use App\Models\Company;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
 
 class CompanyActivityController extends Controller
 {
@@ -37,13 +38,11 @@ class CompanyActivityController extends Controller
     {
         Gate::authorize('create', $company);
 
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('activities', 'public');
-        }
+        $filename = $this->uploadImage($request);
 
         Activity::create($request->validated() + [
             'company_id' => $company->id,
-            'photo' => $path ?? null,
+            'photo' => $filename,
         ]);
 
         return to_route('companies.activities.index', $company);
@@ -64,15 +63,10 @@ class CompanyActivityController extends Controller
     {
         Gate::authorize('update', $company);
 
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('activities', 'public');
-            if ($activity->photo) {
-                Storage::disk('public')->delete($activity->photo);
-            }
-        }
+        $filename = $this->uploadImage($request);
 
         $activity->update($request->validated() + [
-            'photo' => $path ?? $activity->photo,
+            'photo' => $filename ?? $activity->photo,
         ]);
 
         return to_route('companies.activities.index', $company);
@@ -85,5 +79,23 @@ class CompanyActivityController extends Controller
         $activity->delete();
 
         return to_route('companies.activities.index', $company);
+    }
+
+    private function uploadImage(StoreActivityRequest|UpdateActivityRequest $request): ?string
+    {
+        if (! $request->hasFile('image')) {
+            return null;
+        }
+
+        $filename = $request->file('image')->store(options: 'activities');
+
+        $thumb = ImageManager::imagick()->read(Storage::disk('activities')->get($filename))
+            ->scaleDown(274, 274)
+            ->toJpeg()
+            ->toFilePointer();
+
+        Storage::disk('activities')->put('thumbs/'.$request->file('image')->hashName(), $thumb);
+
+        return $filename;
     }
 }
