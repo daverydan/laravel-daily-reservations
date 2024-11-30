@@ -12,6 +12,7 @@
                     <div class="grid grid-cols-4 gap-x-5 gap-y-8">
                         @forelse($activities as $activity)
                             <div>
+                                <a href="{{ route('activity.show', $activity) }}">
                                 @if ($activity->photo)
                                     <img src="{{ asset($activity->thumbnail) }}" alt="{{ $activity->name }}">
                                 @else
@@ -21,6 +22,7 @@
                                     <a href="#" class="text-lg font-semibold">{{ $activity->name }}</a>
                                 </h2>
                                 <time>{{ $activity->start_time }}</time>
+                                </a>
                             </div>
                         @empty
                             <p>No activities</p>
