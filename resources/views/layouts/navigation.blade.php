@@ -15,22 +15,24 @@
                     <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('Home') }}
                     </x-nav-link>
-                    @if (auth()->user()->role_id === \App\Enums\Role::ADMINISTRATOR->value)
-                        <x-nav-link :href="route('companies.index')" :active="request()->routeIs('companies.index')">
-                            {{ __('Companies') }}
-                        </x-nav-link>
-                    @endif
-                    @if (auth()->user()->role_id === \App\Enums\Role::COMPANY_OWNER->value)
-                        <x-nav-link :href="route('companies.users.index', auth()->user()->company_id)" :active="request()->routeIs('companies.users.*')">
-                            {{ __('Administrators') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('companies.guides.index', auth()->user()->company_id)" :active="request()->routeIs('companies.guides.*')">
-                            {{ __('Guides') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('companies.activities.index', auth()->user()->company_id)" :active="request()->routeIs('companies.activities.*')">
-                            {{ __('Activities') }}
-                        </x-nav-link>
-                    @endif
+                    @auth
+                        @if (auth()->user()->role_id === \App\Enums\Role::ADMINISTRATOR->value)
+                            <x-nav-link :href="route('companies.index')" :active="request()->routeIs('companies.index')">
+                                {{ __('Companies') }}
+                            </x-nav-link>
+                        @endif
+                        @if (auth()->user()->role_id === \App\Enums\Role::COMPANY_OWNER->value)
+                            <x-nav-link :href="route('companies.users.index', auth()->user()->company_id)" :active="request()->routeIs('companies.users.*')">
+                                {{ __('Administrators') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('companies.guides.index', auth()->user()->company_id)" :active="request()->routeIs('companies.guides.*')">
+                                {{ __('Guides') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('companies.activities.index', auth()->user()->company_id)" :active="request()->routeIs('companies.activities.*')">
+                                {{ __('Activities') }}
+                            </x-nav-link>
+                        @endif
+                    @endauth
                 </div>
             </div>
 
@@ -94,22 +96,24 @@
             <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
                 {{ __('Home') }}
             </x-responsive-nav-link>
-            @if (auth()->user()->role_id === \App\Enums\Role::ADMINISTRATOR->value)
-                <x-responsive-nav-link :href="route('companies.index')" :active="request()->routeIs('companies.index')">
-                    {{ __('Companies') }}
-                </x-responsive-nav-link>
-            @endif
-            @if (auth()->user()->role_id === \App\Enums\Role::COMPANY_OWNER->value)
-                <x-responsive-nav-link :href="route('companies.users.index', auth()->user()->company_id)"  :active="request()->routeIs('companies.users.*')">
-                    {{ __('Administrators') }}
-                </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('companies.guides.index', auth()->user()->company_id)"  :active="request()->routeIs('companies.guides.*')">
-                    {{ __('Guides') }}
-                </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('companies.activities.index', auth()->user()->company_id)"  :active="request()->routeIs('companies.activities.*')">
-                    {{ __('Activities') }}
-                </x-responsive-nav-link>
-            @endif
+            @auth
+                @if (auth()->user()->role_id === \App\Enums\Role::ADMINISTRATOR->value)
+                    <x-responsive-nav-link :href="route('companies.index')" :active="request()->routeIs('companies.index')">
+                        {{ __('Companies') }}
+                    </x-responsive-nav-link>
+                @endif
+                @if (auth()->user()->role_id === \App\Enums\Role::COMPANY_OWNER->value)
+                    <x-responsive-nav-link :href="route('companies.users.index', auth()->user()->company_id)"  :active="request()->routeIs('companies.users.*')">
+                        {{ __('Administrators') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('companies.guides.index', auth()->user()->company_id)"  :active="request()->routeIs('companies.guides.*')">
+                        {{ __('Guides') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('companies.activities.index', auth()->user()->company_id)"  :active="request()->routeIs('companies.activities.*')">
+                        {{ __('Activities') }}
+                    </x-responsive-nav-link>
+                @endif
+            @endauth
         </div>
 
         <!-- Responsive Settings Options -->
