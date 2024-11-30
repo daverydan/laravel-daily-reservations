@@ -23,7 +23,7 @@ class ActivityFactory extends Factory
         $guide = User::firstWhere('role_id', Role::GUIDE);
 
         return [
-            'company_id' => Company::factory(),
+            'company_id' => Company::all()->random()->id,
             'guide_id' => $guide->id,
             'name' => $guide->name,
             'description' => fake()->text(),
