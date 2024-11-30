@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\Role;
 use App\Models\Company;
 use App\Models\User;
 use Carbon\Carbon;
@@ -19,12 +20,14 @@ class ActivityFactory extends Factory
      */
     public function definition(): array
     {
+        $guide = User::firstWhere('role_id', Role::GUIDE);
+
         return [
             'company_id' => Company::factory(),
-            'guide_id' => User::factory()->guide(),
-            'name' => fake()->name(),
+            'guide_id' => $guide->id,
+            'name' => $guide->name,
             'description' => fake()->text(),
-            'start_time' => Carbon::now(),
+            'start_time' => Carbon::now()->addMonth(),
             'price' => fake()->randomNumber(5),
         ];
     }
