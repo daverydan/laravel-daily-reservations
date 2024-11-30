@@ -19,22 +19,28 @@ class UserSeeder extends Seeder
         collect([
             [
                 'name' => 'Administrator',
-                'email' => 'd@me.com',
+                'email' => 'admin@me.com',
                 'password' => $password,
                 'role_id' => Role::ADMINISTRATOR->value,
             ],
             [
-                'name' => 'Jane Doe',
-                'email' => 'jn@me.com',
+                'name' => 'Owner',
+                'email' => 'owner@me.com',
                 'password' => $password,
                 'company_id' => 1,
                 'role_id' => Role::COMPANY_OWNER->value,
             ],
             [
-                'name' => 'John Deer',
-                'email' => 'jd@me.com',
+                'name' => 'Customer',
+                'email' => 'customer@me.com',
                 'password' => $password,
                 'role_id' => Role::CUSTOMER->value,
+            ],
+            [
+                'name' => 'Guide',
+                'email' => 'guide@me.com',
+                'password' => $password,
+                'role_id' => Role::GUIDE->value,
             ],
         ])->each(fn ($user) => User::create($user));
     }
