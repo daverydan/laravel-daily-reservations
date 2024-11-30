@@ -211,11 +211,9 @@ class CompanyActivityTest extends TestCase
     {
         $company = Company::factory()->create();
         $user = User::factory()->companyOwner()->create(['company_id' => $company->id]);
-        $guide = User::factory()->guide()->create();
         $activity = Activity::factory()->create([
             'company_id' => $company->id,
-            'guide_id' => $guide->id,
-            'name' => $guide->name,
+            'guide_id' => User::factory()->guide()->create()->id,
         ]);
 
         $response = $this->actingAs($user)->delete(route('companies.activities.destroy', [$company, $activity]));
@@ -230,11 +228,9 @@ class CompanyActivityTest extends TestCase
         $company = Company::factory()->create();
         $company2 = Company::factory()->create();
         $user = User::factory()->companyOwner()->create(['company_id' => $company->id]);
-        $guide = User::factory()->guide()->create();
         $activity = Activity::factory()->create([
             'company_id' => $company2->id,
-            'guide_id' => $guide->id,
-            'name' => $guide->name,
+            'guide_id' => User::factory()->guide()->create()->id,
         ]);
 
         $response = $this->actingAs($user)->delete(route('companies.activities.destroy', [$company2, $activity]));

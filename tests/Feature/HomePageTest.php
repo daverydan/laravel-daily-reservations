@@ -34,10 +34,8 @@ class HomePageTest extends TestCase
 
     public function test_pagination_isnt_shown_when_activities_are_9()
     {
-        $guide = User::factory()->guide()->create();
         Activity::factory(9)->create([
-            'guide_id' => $guide->id,
-            'name' => $guide->name,
+            'guide_id' => User::factory()->guide()->create()->id,
         ]);
 
         $response = $this->get(route('home'));
@@ -50,11 +48,9 @@ class HomePageTest extends TestCase
         $guide = User::factory()->guide()->create();
         Activity::factory(9)->create([
             'guide_id' => $guide->id,
-            'name' => $guide->name,
         ]);
         $activity = Activity::factory()->create([
             'guide_id' => $guide->id,
-            'name' => $guide->name,
             'start_time' => now()->addYear(),
         ]);
 
@@ -70,8 +66,7 @@ class HomePageTest extends TestCase
     {
         $guide = User::factory()->guide()->create();
         [$activity, $activity2, $activity3] = Activity::factory(3)->create([
-            'guide_id' => $guide->id,
-            'name' => $guide->name,
+            'guide_id' => User::factory()->guide()->create(),
             'start_time' => now()->addMonths(2),
         ]);
 
