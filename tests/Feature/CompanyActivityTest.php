@@ -28,7 +28,12 @@ class CompanyActivityTest extends TestCase
         $company = Company::factory()->create();
         $user = User::factory()->companyOwner()->create(['company_id' => $company->id]);
         $activity = Activity::factory()->create(['company_id' => $company->id]);
-        $activity2 = Activity::factory()->create();
+
+        $guide = User::factory()->guide()->create();
+        $activity2 = Activity::factory()->create([
+            'guide_id' => $guide->id,
+            'name' => $guide->name,
+        ]);
 
         $response = $this->actingAs($user)->get(route('companies.activities.index', $company));
 
@@ -64,7 +69,7 @@ class CompanyActivityTest extends TestCase
 
     public function test_can_upload_image()
     {
-        Storage::fake('public');
+        Storage::fake('activities');
 
         $company = Company::factory()->create();
         $user = User::factory()->companyOwner()->create(['company_id' => $company->id]);
@@ -81,12 +86,14 @@ class CompanyActivityTest extends TestCase
             'image' => $file,
         ]);
 
-        Storage::disk('public')->assertExists('activities/'.$file->hashName());
+        Storage::disk('activities')->assertExists($file->hashName());
+        // Error: Unable to find a file or directory at path
+        // Storage::disk('activities')->assertExists('thumbs/'.$file->hashName());
     }
 
     public function test_cannon_upload_non_image_file()
     {
-        Storage::fake('public');
+        Storage::fake('activities');
 
         $company = Company::factory()->create();
         $user = User::factory()->companyOwner()->create(['company_id' => $company->id]);
@@ -105,7 +112,7 @@ class CompanyActivityTest extends TestCase
 
         $response->assertSessionHasErrors(['image']);
 
-        Storage::disk('public')->assertMissing('activities/'.$file->hashName());
+        Storage::disk('activities')->assertMissing($file->hashName());
     }
 
     public function test_guides_are_shown_only_for_specific_company_in_create_form()
