@@ -9,4 +9,9 @@ abstract class TestCase extends BaseTestCase
 {
     // protected bool $seed = true;
     protected string $seeder = RoleSeeder::class;
+
+    // protected function setUp(): void
+    // {
+    //     parent::setUp();
+    // }
 }

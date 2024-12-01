@@ -26,7 +26,7 @@ class ActivityFactory extends Factory
         return [
             'company_id' => Company::factory(),
             'guide_id' => $guide->id,
-            'name' => $guide->name,
+            'name' => fake()->word(),
             'description' => fake()->text(),
             'start_time' => Carbon::now()->addMonth(),
             'price' => fake()->randomNumber(5),
