@@ -73,6 +73,6 @@ class GuideActivityTest extends TestCase
 
         $this->assertNotEmpty($response->getContent());
         $this->assertEquals('application/pdf', $response->headers->get('Content-Type'));
-        $this->assertEquals('attachment; filename="'.$activity->name.'.pdf"', $response->headers->get('Content-Disposition'));
+        $this->assertEquals('attachment; filename='.$activity->name.'.pdf', $response->headers->get('Content-Disposition'));
     }
 }
